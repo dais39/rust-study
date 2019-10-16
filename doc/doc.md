@@ -14,9 +14,19 @@ Rust文法
 - 命名規則はスネークケース
 
 ## 変数
-- let   
+```rust
+fn main(){
+
+    let num = 1;
+    
+    let mut mut_num = 2;
+    
+    let num = 3;
+}
+```
+- let
     - immutable
-- let mut   
+- let mut
     - mutable
 - shadowing
     - letで上書きできる
@@ -34,10 +44,11 @@ Rust文法
       - i32, u32, i64, etc
           - defaultでi32
           - 整数リテラル
-              - 1\_000
+              - 1_000
               - 0xff
               - 0o77
-              - 0b1111\_0000   - 浮動小数点型
+              - 0b1111_0000  
+    - 浮動小数点型
       - f32, f64
           - defaultでf64
           - 浮動小数点リテラル
@@ -54,7 +65,7 @@ Rust文法
       - let (x, y) = (1, 2)のようにパターンマッチングでアクセスしたり
       - let x = (3, 4)に対してx.0やx.1でアクセスすることができる
    - 配列型
-      - \[1, 2, 3\]のように\[\]で囲んだ複数の値, すべて同じ型
+      - [1, 2, 3]のように[]で囲んだ複数の値, すべて同じ型
       - 固定長
       - スタック上に確保される
 
@@ -64,9 +75,11 @@ Rust文法
    - Err
 - .expect()を使うと、Errの場合指定したメッセージを標準出力する
 ```rust
-match Result {
-   Ok(i) => ,
-   Err(e) => ,
+fn main(){
+    match Result {
+       Ok(i) => i,
+       Err(e) => e,
+    }
 }
 ```
 
@@ -116,9 +129,7 @@ match Result {
 ## スライス型
 ----------
 - 値の一部への参照
-```rust
-[start_index..end_index]
-```
+`[start_index..end_index]`
 - 文字列スライスの型は&str
 - 文字列以外にもスライスは作れる
    - 整数型であれば&\[i32\]など
@@ -159,8 +170,8 @@ match Result {
 
 - フロー制御演算子
 ```rust
-match 式 {
-    => ,
+match num {
+   1 => println!(num),
 }
 ```
 - Option<t>に対してmatchを使うことでSomeの値を利用できる
@@ -172,7 +183,7 @@ if let
 ## モジュール
 - mod
    - モジュール定義
-   - cargo new hogehoge --lib
+   - `cargo new hogehoge --lib`
    - ;で外部ファイルに処理を分割できる
    - fooモジュールにサブモジュールがなければfoo.rsを作成する
    - fooモジュールにサブモジュールがある場合はfoo/mod.rsを作成する
@@ -183,9 +194,9 @@ if let
    - 長いフルパス表記を簡略化するために使う
    - javaのimportに似ている
    - モジュールにつかうことができるしEnumにも使うことができる
-      - use Enum::{A, B};
+     `use Enum::{A, B};`
    - *を使うことで配下すべてをスコープに入れることができる(glob)
-      - use module::hoge::*
+     `use module::hoge::*`
    - superを使うことで親モジュールにアクセス
 ## コレクション
 - ベクタ
@@ -248,15 +259,23 @@ if let
 ## ジェネリクス
 - 異なる型を一つの関数/構造体/メソッドで扱いたいときに利用する
 - 関数の場合
-   - fn method\_a<t>(item: T) -> T{}
+  ```rust
+  fn method_a<T>(item: T) -> T{}
+  ```
 - 構造体の場合
-   - struct Point<t>{}
-   - struct Point<t, u>{}
+```rust
+struct Point<T>{}
+struct PointPoint<T, U>{}
+```
 - メソッドの場合
-   - impl<t> Point<t>{}
+```rust
+impl<T> Point<t>{}
+```
    - 特定の型だけメソッド定義をすることができる
-      - impl Point<i32>{}
-      - i32の構造体は、Tとi32の構造体で定義したメソッドを利用することができる
+   ```rust
+    impl Point<i32>{}
+   ```
+   - i32の構造体は、Tとi32の構造体で定義したメソッドを利用することができる
 - Rustのジェネリクスはコンパイル時に具体的な型に変換されるため実行時のパフォーマンスは低下しない
 
 ## トレイト
@@ -265,7 +284,7 @@ if let
     trait Foo { 
         fn foo(&self) -> String;
     }
-   
+    
     impl Foo for FooFoo{
         fn foo(&self) -> String{}
     }
@@ -274,20 +293,20 @@ if let
  - Traitを実装できるのは、localにある型のみ
  - トレイト境界
    - ジェネリクスに対して振る舞いを制限できる
-   ```rust
-   fn bar<T: foo>(item: T){}
-   ```
+    ```rust
+    fn bar<T: foo>(item: T){}
+    ```
    - 複数のトレイト境界を設けることもできる
-   ```rust
-   fn bar<T: foo + display>(item: T){}
-   ```
+    ```rust
+    fn bar<T: foo + display>(item: T){}
+    ```
    - where節でトレイト境界を見やすくできる
-   ```rust
-   fn bar<t, u>(t: T, u: U) -> i32 where T: Display, U: Display
-   ```
+    ```rust
+    fn bar<t, u>(t: T, u: U) -> i32 where T: Display, U: Display
+    ```
 - ブランケット実装
    - 特定のトレイトを実装する型に対してトレイトを実装することができる
-     ```rust
-     impl <T: display> ToString for T{
-     }
-     ```
+    ```rust
+    impl <T: display> ToString for T{
+    }
+    ```
