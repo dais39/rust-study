@@ -261,16 +261,33 @@ if let
 
 ## トレイト
  - 特定の型の振る舞いを他の型に共有することができる
- - trait Foo { fn foo(&self) -\> String; }
- - impl Foo for FooFoo{fn foo(&self) -> String{}}
+    ```rust
+    trait Foo { 
+        fn foo(&self) -> String;
+    }
+   
+    impl Foo for FooFoo{
+        fn foo(&self) -> String{}
+    }
+    ```
  - デフォルト実装をTraitに持たせることができる
  - Traitを実装できるのは、localにある型のみ
  - トレイト境界
    - ジェネリクスに対して振る舞いを制限できる
-   - fn bar< foo>(item: T){}
+   ```rust
+   fn bar<T: foo>(item: T){}
+   ```
    - 複数のトレイト境界を設けることもできる
-      - fn bar< foo + display>(item: T){}
+   ```rust
+   fn bar<T: foo + display>(item: T){}
+   ```
    - where節でトレイト境界を見やすくできる
-      - fn bar<t, u>(t: T, u: U) -\> i32 where T: Display, U: Display- ブランケット実装
+   ```rust
+   fn bar<t, u>(t: T, u: U) -> i32 where T: Display, U: Display
+   ```
+- ブランケット実装
    - 特定のトレイトを実装する型に対してトレイトを実装することができる
-      - fn < display> ToString for T{}
+     ```rust
+     impl <T: display> ToString for T{
+     }
+     ```
